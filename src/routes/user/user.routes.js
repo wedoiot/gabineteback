@@ -17,5 +17,8 @@ api.get('/user/prueba',UserController.prueba);
 api.get('/user', UserController.prueba);
 api.get('/user/pruebasauth',md_auth.ensureAuth,UserController.prueba);
 api.post('/user/register', UserController.register);
+api.put('/user/modify', md_auth.ensureAuth, UserController.modify);
+api.get('/user/getUserByToken', md_auth.ensureAuth, UserController.getUserByToken);
+api.get('/user/getAllUsers', md_auth.ensureAuth, UserController.getAllUsers);
 
 module.exports=api;

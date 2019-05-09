@@ -1,3 +1,4 @@
 {
-    "server":"mongodb://127.0.0.1/test"
+    "server2":"mongodb://127.0.0.1/test",
+    "server":"mongodb+srv://userdev:hPpMSrUKoxmLmQFp@clustertransito2018-6tvlc.mongodb.net/test?retryWrites=true"
 }

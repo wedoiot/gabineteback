@@ -22,7 +22,7 @@ const authenticate = (params) => {
     return new Promise((resolve,reject) => {
         var userLogin = setUserLogin(params);
         if(userLogin.username && userLogin.password){
-            User.findOne({$or:[{username: userLogin.username.toLowerCase()},{email: userLogin.username.toLowerCase()}]}).exec((err, userLoad) =>{
+            User.findOne({$or:[{username: userLogin.username},{email: userLogin.username.toLowerCase()}]}).exec((err, userLoad) =>{
                 if(err) reject(err);
                 if(userLoad){
                     if(userLoad.validPassword(userLogin.password)){
@@ -43,6 +43,73 @@ const authenticate = (params) => {
     })
 }
 
+const modifyUser = (params) => {
+    return new Promise((resolve,reject) => {
+        var userToModify = {};
+        userToModify = Object.assign(params);
+        var user = setUser(userToModify);
+        var userComplete = Object.assign(user,userToModify)
+
+        delete userToModify._id;
+        
+        User.findOneAndUpdate({username: userToModify.username}, userComplete, {new: true}, (err, newUser) =>{
+            if(err) {
+                for (var field in err.errors) {
+                    reject(err.errors[field]);
+                }
+            }
+            resolve(newUser);
+        });
+    })
+}
+
+const getAUserByToken = (token) => { 
+    return new Promise (async(resolve, reject) =>{
+        var user = new User();
+        var userToken = user.decodeJWT(token)
+        try { 
+            var userLoader = await findUserByUsernameOrEmail(userToken.username);
+            resolve(userLoader);
+        }
+        catch (error){
+            reject(error);
+        } 
+    });
+}
+
+const findUserByUsernameOrEmail = (nickname) =>{
+    return new Promise ((resolve,reject) =>{ 
+        User.findOne({$or:[{username:nickname.toLowerCase()},{email:nickname.toLowerCase()}]}).exec((err,userLoad) =>{
+            if(err) {
+                for (var field in err.errors) {
+                    reject(err.errors[field]);
+                }
+            }
+            userLoad.hash = undefined;
+            userLoad.salt = undefined;
+            resolve(userLoad);
+        })
+    })
+}
+
+const getUserList = ()=> {
+    return new Promise((resolve,reject) => {
+        User.find().exec((err, users) =>{
+            if(err) {
+                for (var field in err.errors) {
+                    reject(err.errors[field]);
+                }
+            }
+            users.map(x => {
+                x.hash = undefined;
+                x.salt = undefined;
+                return x;
+            })
+            resolve(users);
+        })
+     })
+}
+
 function setUserLogin(params) {
     const login ={
         username: params.username,
@@ -58,12 +125,17 @@ function setUser(params) {
     user.username = params.username;
     user.email = params.email;
     user.role = params.role;
-    user.setPassword(params.password);
+    if(params.password){
+        user.setPassword(params.password);
+    }
 
     return user;
 }
 
 module.exports  = {
     verifyUser,
-    authenticate
+    authenticate,
+    modifyUser,
+    getAUserByToken,
+    getUserList,
 }

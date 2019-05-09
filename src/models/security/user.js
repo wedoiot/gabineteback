@@ -40,9 +40,15 @@ UserSchema.methods.generateJWT = function() {
 		username: this.username,
 		email:this.email,
 		role:this.role,
-		expiresIn:'8h'
-    };
-    return jwt.sign(payload,secret);
+		iat: Date.now(),
+		//exp: 60000
+	};
+	let expires= {expiresIn: 28800000} //60000}
+    return jwt.sign(payload,secret,expires);
 };
+
+UserSchema.methods.decodeJWT = function(token) {
+	return jwt.decode(token);
+}
 
 module.exports=mongoose.model('user',UserSchema);
