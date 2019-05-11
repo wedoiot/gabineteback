@@ -18,6 +18,11 @@ async function login(req,res){
     }
 }
 
+async function isTokenValid(req,res) {
+    res.status(200).send(generateResponse(true,"el token es valido!"));
+}
+
 module.exports = {
-    login
+    login,
+    isTokenValid,
 }

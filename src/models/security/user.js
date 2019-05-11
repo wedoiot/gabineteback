@@ -16,7 +16,8 @@ var UserSchema=Schema({
 	email:{type: String, lowercase: true, unique:true, required: [true, "Email no puede estar vacio"], match: [/\S+@\S+\.\S+/, 'Carácteres no permitidos en el email'], index: true},
 	salt:String,
     hash: String,
-	role:String
+	role:[{type: Schema.Types.ObjectId, ref: 'role'}],
+	//active: { type: Boolean, default: true }
 },
 {timestamps:true});
 

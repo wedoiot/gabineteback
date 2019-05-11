@@ -9,7 +9,8 @@ app.use(helmet())
 
 //cargar rutas
 const user_routes = require('./src/routes/user/user.routes');
-const auth_routes = require('./src/routes/auth/login.routes')
+const auth_routes = require('./src/routes/auth/login.routes');
+const role_routes = require('./src/routes/auth/role.routes');
 
 //middlewares
 app.use(bodyParser.urlencoded({extended:false}));
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 //rutas
 app.use('/api',user_routes);
 app.use('/api',auth_routes);
+app.use('/api',role_routes);
 
 // exportar
 module.exports =app;

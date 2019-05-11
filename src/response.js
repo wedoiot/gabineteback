@@ -14,6 +14,14 @@ const generateError = (error) => {
     }
 }
 
+const generateErrorMessage = (error, message) => {
+    return {
+        type: 'ERROR',
+        entity: error,
+        message: message,
+    }
+}
+
 /**
  *
  * @param {Object} object
@@ -34,4 +42,5 @@ const generateResponse = (object, messageObject) => {
 module.exports = {
     generateError,
     generateResponse,
+    generateErrorMessage,
 }
