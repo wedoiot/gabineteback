@@ -5,7 +5,7 @@ var app=require('./app');
 var port=3800;
 
 //Conexion Database
-mongoose.Promise=global.Promise;
+/*mongoose.Promise=global.Promise;
 
 mongoose.connect(`${connection.server}`,{ useNewUrlParser: true })
     .then(()=>{
@@ -17,7 +17,11 @@ mongoose.connect(`${connection.server}`,{ useNewUrlParser: true })
         });
     
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err));*/
     /*
     agregar a white list de mongo atlas la ip donde se va a alojar el api (en este caso heroku)
     */
+   // Crear servidor
+   app.listen(process.env.PORT || port,()=>{
+    console.log("Servidor corriendo en http://localhost:3800 ");
+});

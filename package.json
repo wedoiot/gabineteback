@@ -1,7 +1,7 @@
 {
-  "name": "gestiontransito",
+  "name": "api",
   "version": "1.0.0",
-  "description": "gestion modulos teoricos y practicos escuelas de transito",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
@@ -11,18 +11,17 @@
   "license": "MIT",
   "dependencies": {
     "atob": "^2.1.2",
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4",
-    "firebase": "^5.8.6",
-    "firebase-admin": "^7.0.0",
-    "helmet": "^3.15.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "helmet": "^3.18.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
-    "mongoose": "^5.4.19",
-    "mongoose-unique-validator": "^2.0.2"
+    "mongoose": "^5.5.11",
+    "mongoose-unique-validator": "^2.0.3",
+    "mqtt": "^2.18.8"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.19.1"
   },
   "engines": {
     "node": "10.9.0",
