@@ -3,9 +3,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const mongoose = require('mongoose');
 var app = express();
 
 app.use(helmet())
+
+// connection to db
+mongoose.connect('mongodb://localhost/crud-gabinetes')
+  .then(db => console.log('Base de datos conectada'))
+  .catch(err => console.log(err));
 
 //cargar rutas
 const user_routes = require('./src/routes/user/user.routes');
