@@ -17,6 +17,19 @@ async function create(req, res){
     }
 }
 
+async function getById(req,res){
+    //var id = req.body.id
+
+}
+
+async function getAll(req,res){
+
+}
+
+async function update(req,res){
+    var params = req.body;
+}
+
 module.exports = {
     prueba,
     create

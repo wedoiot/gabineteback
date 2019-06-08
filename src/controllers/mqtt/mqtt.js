@@ -4,6 +4,7 @@ var serverMqtt = require('../../../configuration/servermqtt.json');
 var client = mqtt.connect(serverMqtt.serverTest);
 //var client = mqtt.connect(serverMqtt.server,serverMqtt.options);
 
+const {insertMqtt} = require('../../mqtt/service');
 
 client.on('connect', () => {
     if (client.connected) {
@@ -14,12 +15,23 @@ client.on('connect', () => {
     }
 })
 
-client.on('message', function (topico, message) {
+client.on('message', async function (topico, message) {
     // message is Buffer
     console.log("_______________________________________________________________")
     console.log(`el tópico que recibe la publicacion es: ${topico} `)
     console.log(`el mensaje que recibe el tópico es: ${message.toString()}`)
     console.log("_______________________________________________________________")
+    let params  = {
+        topic: topico,
+        message: message
+    }
+    try {
+        var response = await insertMqtt(params);
+        console.log(response);
+    }
+    catch(err) {
+        console.log(err);
+    }
     //Se debe crear un registro de esta info...
     //client.end()
 
