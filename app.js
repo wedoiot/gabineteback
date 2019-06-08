@@ -3,21 +3,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
-const mongoose = require('mongoose');
 var app = express();
 
 app.use(helmet())
-
-// connection to db
-mongoose.connect('mongodb://localhost/crud-gabinetes')
-  .then(db => console.log('Base de datos conectada'))
-  .catch(err => console.log(err));
 
 //cargar rutas
 const user_routes = require('./src/routes/user/user.routes');
 const auth_routes = require('./src/routes/auth/login.routes');
 const role_routes = require('./src/routes/auth/role.routes');
 const mqtt_router = require('./src/routes/pruebamqtt');
+const gabinete_router = require('./src/routes/configuration/gabinete.routes');
 
 //middlewares
 app.use(bodyParser.urlencoded({extended:false}));
@@ -39,6 +34,7 @@ app.use('/api',user_routes);
 app.use('/api',auth_routes);
 app.use('/api',role_routes);
 app.use('/api',mqtt_router);
+app.use('/api',gabinete_router);
 
 // exportar
 module.exports =app;
