@@ -1,9 +1,10 @@
 {
-    "server":"mqtt://test.mosquitto.org",
+    "serverTest":"mqtt://mosquitto.org",
+    "server":"mqtt://192.168.1.4",
     "options":{
         "clientId":"mqttjs01",
-        "username":"daniel",
-        "password":"pass",
+        "username":"wedoiot",
+        "password":"Plamontina01",
         "clean":"true"
     }
 }

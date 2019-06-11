@@ -1,15 +1,17 @@
 'use strict'
 
 const Role = require('../../models/security/role');
+const Role_Menu = require('../../models/security/role_menu');
 const {generateResponse, generateError} = require('../../response');
-const {allRoles} = require ('../../core/security/roles');
+const {allRoles, getRole, setStateRole, createRoleMenu} = require ('../../core/security/roles');
 
 
-//Método solo para registrar roles (no invocar en el cliente)
 function registerRoles(req,res) {
+
+    var params = req.body;
     let role = new Role();
-    role.name = "USER_ROLE",
-    role.description = " ";
+    role.name = params.name,
+    role.description = params.description;
 
     role.save((err,saved)=>{
         if (err) return res.status(500).send({message:"Error al registar el role"});
@@ -17,8 +19,6 @@ function registerRoles(req,res) {
         return res.status(200).send(saved);
     })
 }
-
-//LISTA DE TODOS LOS ROLES
 
 async function getRoles(req, res){
     try{
@@ -30,10 +30,44 @@ async function getRoles(req, res){
     }
 }
 
+async function getRoleById(req, res){
+    var id = req.params.id;
+    try{
+        let role = await getRole(id);
+        return res.status(200).send(generateResponse(role, ''));
+    }
+    catch(error){
+        return res.status(500).send(generateError(error));
+    }
+}
 
+async function setState(req,res){
+    var params = req.body;
+    try{
+        let role = await setStateRole(params);
+        return res.status(200).send(generateResponse(role, ''));
+    }
+    catch(error){
+        return res.status(500).send(generateError(error));
+    }
+}
+
+async function registerRoleMenu(req,res){
+    var params = req.body;
+    try{
+        var roleMenu = await createRoleMenu(params);
+        return res.status(200).send(generateResponse(roleMenu, ''));
+    }
+    catch(error){
+        return res.status(500).send(generateError(error));
+    }
+}
 
 
 module.exports = {
     registerRoles,
     getRoles,
+    getRoleById,
+    setState,
+    registerRoleMenu
 }

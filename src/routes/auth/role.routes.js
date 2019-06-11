@@ -8,7 +8,9 @@ var RoleController=require('../../controllers/auth/role');
 
 var api=express.Router();
 
-api.get('/role/create', RoleController.registerRoles);
-api.get('/role/getRoles', md_auth.ensureAuth, RoleController.getRoles);
-
+api.post('/role/create', RoleController.registerRoles);
+api.get('/role/getRoles', /*md_auth.ensureAuth,*/ RoleController.getRoles);
+api.get('/role/getRole/:id', /*md_auth.ensureAuth,*/ RoleController.getRoleById);
+api.post('/role/setState', /*md_auth.ensureAuth,*/ RoleController.setState);
+api.post('/role/addRoleMenu',RoleController.registerRoleMenu);
 module.exports=api;

@@ -11,7 +11,9 @@ app.use(helmet())
 const user_routes = require('./src/routes/user/user.routes');
 const auth_routes = require('./src/routes/auth/login.routes');
 const role_routes = require('./src/routes/auth/role.routes');
+const menu_routes = require('./src/routes/auth/menu.routes');
 const mqtt_router = require('./src/routes/pruebamqtt');
+const gabinete_router = require('./src/routes/configuration/gabinete.routes');
 
 //middlewares
 app.use(bodyParser.urlencoded({extended:false}));
@@ -33,6 +35,8 @@ app.use('/api',user_routes);
 app.use('/api',auth_routes);
 app.use('/api',role_routes);
 app.use('/api',mqtt_router);
+app.use('/api',menu_routes);
+app.use('/api',gabinete_router);
 
 // exportar
 module.exports =app;
