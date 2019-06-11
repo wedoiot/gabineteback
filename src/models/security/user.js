@@ -17,7 +17,7 @@ var UserSchema=Schema({
 	salt:String,
     hash: String,
 	role:[{type: Schema.Types.ObjectId, ref: 'role'}],
-	//active: { type: Boolean, default: true }
+	active: { type: Boolean, default: true }
 },
 {timestamps:true});
 

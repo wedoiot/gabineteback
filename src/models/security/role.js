@@ -7,6 +7,7 @@ var uniqueValidator = require('mongoose-unique-validator');
 var RoleSchema=Schema({
 	name:{type: String, unique:true, index: true},
     description:String,
+    active:{type:Boolean, default:true}
 },
 {timestamps:true});
 
