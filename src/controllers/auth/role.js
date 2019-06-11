@@ -1,8 +1,9 @@
 'use strict'
 
 const Role = require('../../models/security/role');
+const Role_Menu = require('../../models/security/role_menu');
 const {generateResponse, generateError} = require('../../response');
-const {allRoles, getRole, setStateRole} = require ('../../core/security/roles');
+const {allRoles, getRole, setStateRole, createRoleMenu} = require ('../../core/security/roles');
 
 
 function registerRoles(req,res) {
@@ -18,7 +19,6 @@ function registerRoles(req,res) {
         return res.status(200).send(saved);
     })
 }
-
 
 async function getRoles(req, res){
     try{
@@ -52,12 +52,22 @@ async function setState(req,res){
     }
 }
 
-
+async function registerRoleMenu(req,res){
+    var params = req.body;
+    try{
+        var roleMenu = await createRoleMenu(params);
+        return res.status(200).send(generateResponse(roleMenu, ''));
+    }
+    catch(error){
+        return res.status(500).send(generateError(error));
+    }
+}
 
 
 module.exports = {
     registerRoles,
     getRoles,
     getRoleById,
-    setState
+    setState,
+    registerRoleMenu
 }
